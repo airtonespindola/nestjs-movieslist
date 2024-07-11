@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Producer {
+  id     Int             @id @default(autoincrement())
+  name   String          @unique
+  movies MovieProducer[]
+}
+
+model Studio {
+  id     Int           @id @default(autoincrement())
+  name   String        @unique
+  movies MovieStudio[]
+}
+
+model Movie {
+  id         Int             @id @default(autoincrement())
+  name       String          @unique
+  studios    MovieStudio[]
+  producers  MovieProducer[]
+  Indication Indication[]
+}
+
+model MovieStudio {
+  studioId Int
+  movieId  Int
+  Studio   Studio @relation(fields: [studioId], references: [id])
+  Movie    Movie  @relation(fields: [movieId], references: [id])
+
+  @@id([studioId, movieId])
+  @@unique([studioId, movieId])
+}
+
+model MovieProducer {
+  producerId Int
+  movieId    Int
+  Producer   Producer @relation(fields: [producerId], references: [id])
+  Movie      Movie    @relation(fields: [movieId], references: [id])
+
+  @@id([producerId, movieId])
+  @@unique([producerId, movieId])
+}
+
+model Indication {
+  id      Int     @id @default(autoincrement())
+  year    Int
+  winner  Boolean
+  movie   Movie   @relation(fields: [movieId], references: [id])
+  movieId Int
+
+  @@unique([year, movieId])
+}
+
+view ProducerAwardsIntervals {
+  producer    String
+  previousWin Int
+  followWin   Int
+  interval    Int
+
+  @@unique([producer, previousWin, followWin])
+}
