@@ -27,6 +27,8 @@ $ yarn install
 
 ## Executando a aplicação
 
+Antes de executar a aplicação é necessário criar o arquivo _.env_, usando como base o arquivo [.env.example](.env.example).
+
 ```bash
 $ yarn start
 ```

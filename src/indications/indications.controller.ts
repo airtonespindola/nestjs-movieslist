@@ -26,8 +26,9 @@ export class IndicationsController {
   }
 
   @Get()
-  findAll() {
-    return this.indicationsService.findAll();
+  async findAll() {
+    const data = await this.indicationsService.findAll();
+    return { data };
   }
 
   @Get(':id')

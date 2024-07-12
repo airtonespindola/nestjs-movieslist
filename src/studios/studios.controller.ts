@@ -21,8 +21,9 @@ export class StudiosController {
   }
 
   @Get()
-  findAll() {
-    return this.studiosService.findAll();
+  async findAll() {
+    const data = await this.studiosService.findAll();
+    return { data };
   }
 
   @Get(':id')

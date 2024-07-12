@@ -21,8 +21,9 @@ export class MoviesController {
   }
 
   @Get()
-  findAll() {
-    return this.moviesService.findAll();
+  async findAll() {
+    const data = await this.moviesService.findAll();
+    return { data };
   }
 
   @Get(':id')
