@@ -34,9 +34,5 @@ $ yarn start
 ## Testes
 
 ```bash
-# unit tests
 $ yarn test
-
-# e2e tests
-$ yarn test:e2e
 ```
